@@ -14,6 +14,8 @@ class RoutesConfiguration implements RouteConfig{
      switch(settings.name!){
       case '/part1':
         return   TimelineView();
+      case '/part2':
+        return  TimelineView();   
       default : 
         return const SizedBox();    
     }
