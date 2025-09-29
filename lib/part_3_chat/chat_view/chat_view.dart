@@ -31,7 +31,7 @@ class _ChatViewState extends State<ChatView> {
     _controller.clear();
 
     // Scroll to bottom after short delay
-    Future.delayed(Duration(milliseconds: 100), () {
+     WidgetsBinding.instance.addPostFrameCallback( (_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
