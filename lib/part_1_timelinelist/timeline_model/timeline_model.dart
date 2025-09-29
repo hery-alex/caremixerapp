@@ -1,10 +1,10 @@
 
 
 class TimelineItem {
-  final String timelineItemType;
-  final String timelineItemTitle;
-  final DateTime timelineItemTimestamp;
-  final String timelineItemMessage;
+  final String? timelineItemType;
+  final String? timelineItemTitle;
+  final DateTime? timelineItemTimestamp;
+  final String? timelineItemMessage;
 
   TimelineItem({
     required this.timelineItemType,

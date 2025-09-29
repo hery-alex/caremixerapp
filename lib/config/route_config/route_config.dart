@@ -1,4 +1,4 @@
-import 'package:caremixer_test/part_1_timelinelist/timelinelist_UI.dart';
+import 'package:caremixer_test/part_1_timelinelist/timeline_view/timelinelist_view.dart';
 import 'package:flutter/material.dart';
 
 
@@ -13,7 +13,7 @@ class RoutesConfiguration implements RouteConfig{
      Widget checkPath(RouteSettings settings){
      switch(settings.name!){
       case '/part1':
-        return  const TimelinelistUi();
+        return   TimelineView();
       default : 
         return const SizedBox();    
     }
