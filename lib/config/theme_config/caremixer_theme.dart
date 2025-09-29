@@ -8,11 +8,11 @@ class CaremixerTheme {
    static ColorScheme primaryColorScheme =  ColorScheme(
       primary: Color(0xffffd8cf),
       onPrimary: Color(0xff6b1300),
-      secondary: Color(0xffe2f7e6), 
+      secondary: Color(0xff84cc8f), 
       onSecondary:Color(0xfff05226), 
       error: Color(0xffbd3b27), 
       onError:  Color(0xffc1e0c7),
-      surface: Color(0xff84cc8f), 
+      surface:Color(0xffe2f7e6) , 
       onSurface: Color(0xff345136),
       brightness: Brightness.light
     );

@@ -1,7 +1,10 @@
 import 'package:caremixer_test/part_1_timelinelist/timeline_view/timelinelist_view.dart';
-import 'package:caremixer_test/part_2_api_integration/pokemon_view.dart';
+import 'package:caremixer_test/part_2_api_integration/pokemon_api_view/pokemon_view.dart';
+import 'package:caremixer_test/part_2_api_integration/pokemon_api_view_model/pokemon_api_state.dart';
+import 'package:caremixer_test/part_2_api_integration/pokemon_api_view_model/pokemon_api_view_model.dart';
 import 'package:caremixer_test/part_3_chat/chat_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 abstract class RouteConfig{
@@ -17,7 +20,9 @@ class RoutesConfiguration implements RouteConfig{
       case '/timeline':
         return   TimelineView();
       case '/pokemon':
-        return  PokemonApiView();   
+        return   BlocProvider(
+              create: (_) => PokemonApiViewModel()..add(LoadPokemons()),
+              child:PokemonApiView());   
       case '/chat':
         return  ChatView(); 
       default : 
@@ -35,16 +40,10 @@ class RoutesConfiguration implements RouteConfig{
          return RoutesConfiguration().checkPath(settings);
        },
        transitionsBuilder: (_,anim,__,child){
-           const begin = Offset(1.0, 0.0);
-           const end = Offset.zero;
-           const curve = Curves.ease;
-  
-           var tween =  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-  
-           return SlideTransition(
-             position: anim.drive(tween),
-             child: child,
-           );
+          return FadeTransition(
+            opacity: anim,
+            child: child,
+          );
        }
     );
   }

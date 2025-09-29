@@ -78,12 +78,12 @@ class TimelineBodySectionContent extends StatelessWidget {
         boxShadow: [
             BoxShadow(
               color:Theme.of(context).colorScheme.onSurface
-                  .withAlpha((255 * 0.34).round()),
+                  .withAlpha((255 * 0.24).round()),
               blurRadius: 10,
             ),
             BoxShadow(
               color:Theme.of(context).colorScheme.onSurface
-                  .withAlpha((255 * 0.15).round()),
+                  .withAlpha((255 * 0.08).round()),
               blurRadius: 5,
             ),
           ],
