@@ -45,90 +45,127 @@ class _PokemonApiViewState extends State<PokemonApiView> {
 
   @override
   Widget build(BuildContext context) {
-    return  LayoutConfig(
+    return LayoutConfig(
           appBarTitle: 'Pokemon Api',
           currentIndex: 1,
-          child:BlocBuilder<PokemonApiViewModel, PokemonListState>(
-            builder: (context, state) {
-              if (state.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (!state.isLoading) {
-                return  RefreshIndicator(
-                  onRefresh: () async {
-                    context.read<PokemonApiViewModel>().add(ResetPaginationPokemons());
-                  },
-                  child: CustomScrollView(
-                    controller: _scrollController,
-                    slivers: [
-                        SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        sliver: SliverGrid(
-                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,      // 2 per row
-                          mainAxisSpacing: 15.0,   // vertical spacing
-                          crossAxisSpacing: 15.0,  // horizontal spacing
-                          childAspectRatio: 1.0,  // width/height ratio
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: state.pokemons.length,
-                          (context, index) {
-                  
-                            return Container(
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surface,
-                                borderRadius: BorderRadius.all(Radius.circular(40)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color:Theme.of(context).colorScheme.onPrimary
-                                        .withAlpha((255 * 0.24).round()),
-                                    blurRadius: 10,
-                                  ),
-                                  BoxShadow(
-                                    color:Theme.of(context).colorScheme.onPrimary
-                                        .withAlpha((255 * 0.08).round()),
-                                    blurRadius: 5,
-                                  ),
-                                ],
-                              ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      UtilsFunctions.capitalizeFirstLetter(state.pokemons[index].pokemonName),
-                                      style:Theme.of(context).primaryTextTheme.headlineSmall,
-                                    ),
-                                     Center(
-                                      child: CachedNetworkImage(
-                                        imageUrl: state.pokemons[index].pokemonImage,
-                                        height: 100,
-                                        width: 100,
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) => const CircularProgressIndicator(),
-                                        errorWidget: (context, url, error) => Icon(Icons.error, size: 50, color: Theme.of(context).colorScheme.error),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                            );
-                          
-                       })),),
-                        SliverToBoxAdapter(
-                        child: state.isLoadingMore && state.pokemons.isNotEmpty
-                            ? const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Center(child: CircularProgressIndicator()),
-                              )
-                            : const SizedBox.shrink(),
+          child:Column(
+            children: [
+               Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search Pokémon...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary, // second theme color
+                        width: 2.0,
                       ),
-                   ],
+                    ),
                   ),
-                );
-              } else if (state.error != null) {
-                return Center(child: Text(state.error!));
-              }
-              return const SizedBox();
-            },
+                  onChanged: (value) {
+                    context.read<PokemonApiViewModel>().add(SearchPokemons(value));
+                  },
+                ),
+              ),
+              Expanded(
+                child: BlocBuilder<PokemonApiViewModel, PokemonListState>(
+                  builder: (context, state) {
+
+                    final pokemons = state.filteredPokemons.isNotEmpty ||
+                        state.filteredPokemons.isEmpty && state.pokemons.isNotEmpty
+                    ? (state.filteredPokemons.isNotEmpty
+                        ? state.filteredPokemons
+                        : state.pokemons)
+                    : [];
+
+
+                    if (state.isLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (!state.isLoading) {
+                      return  RefreshIndicator(
+                        onRefresh: () async {
+                          context.read<PokemonApiViewModel>().add(ResetPaginationPokemons());
+                        },
+                        child: CustomScrollView(
+                          controller: _scrollController,
+                          slivers: [
+                              SliverPadding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              sliver: SliverGrid(
+                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,      // 2 per row
+                                mainAxisSpacing: 15.0,   // vertical spacing
+                                crossAxisSpacing: 15.0,  // horizontal spacing
+                                childAspectRatio: 1.0,  // width/height ratio
+                              ),
+                              delegate: SliverChildBuilderDelegate(
+                                childCount: pokemons.length,
+                                (context, index) {
+                        
+                                  return Container(
+                                    padding: EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).colorScheme.surface,
+                                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color:Theme.of(context).colorScheme.onPrimary
+                                              .withAlpha((255 * 0.24).round()),
+                                          blurRadius: 10,
+                                        ),
+                                        BoxShadow(
+                                          color:Theme.of(context).colorScheme.onPrimary
+                                              .withAlpha((255 * 0.08).round()),
+                                          blurRadius: 5,
+                                        ),
+                                      ],
+                                    ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            UtilsFunctions.capitalizeFirstLetter(pokemons[index].pokemonName),
+                                            style:Theme.of(context).primaryTextTheme.headlineSmall,
+                                          ),
+                                           Center(
+                                            child: CachedNetworkImage(
+                                              imageUrl: pokemons[index].pokemonImage,
+                                              height: 100,
+                                              width: 100,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) => const CircularProgressIndicator(),
+                                              errorWidget: (context, url, error) => Icon(Icons.error, size: 50, color: Theme.of(context).colorScheme.error),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                  );
+                                
+                             })),),
+                              SliverToBoxAdapter(
+                              child: state.isLoadingMore && pokemons.isNotEmpty
+                                  ? const Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 16),
+                                      child: Center(child: CircularProgressIndicator()),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ),
+                         ],
+                        ),
+                      );
+                    } else if (state.error != null) {
+                      return Center(child: Text(state.error!));
+                    }
+                    return const SizedBox();
+                  },
+                ),
+              ),
+            ],
           ),
     );
   }

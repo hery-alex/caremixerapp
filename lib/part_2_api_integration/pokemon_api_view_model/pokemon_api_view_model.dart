@@ -73,6 +73,14 @@ class PokemonApiViewModel extends Bloc<PokemonListEvent, PokemonListState> {
       }
 
     });
+    on<SearchPokemons>((event, emit) {
+      final query = event.query.toLowerCase();
+      final results = state.pokemons
+          .where((pokemon) => pokemon.pokemonName.toLowerCase().contains(query))
+          .toList();
+
+      emit(state.copyWith(filteredPokemons: results));
+    });
   }
   
 }
