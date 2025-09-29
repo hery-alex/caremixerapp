@@ -25,7 +25,7 @@ class LayoutConfig extends StatelessWidget {
             bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1.0),
             child: Container(
-              color: Theme.of(context).colorScheme.onSurface, // line color
+              color: Theme.of(context).colorScheme.onSurface,
               height: 1.0,
             ),
            ),
@@ -35,8 +35,8 @@ class LayoutConfig extends StatelessWidget {
         decoration:  BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: Theme.of(context).colorScheme.onSurface,  // Border color
-              width: 1.0,          // Border thickness
+              color: Theme.of(context).colorScheme.onSurface,  
+              width: 1.0,         
             ),
           ),
         ),
