@@ -2,7 +2,6 @@ library;
 
 import 'dart:convert';
 import 'package:caremixer_test/api_library/api_exceptions/caremixer_api_exceptions.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
  
  part '../api_endpoints/api_pokemon_list_endpoint.dart';
@@ -230,8 +229,4 @@ class CaremixerApiBase {
     return response.bodyBytes as T;
   }
 
-
-  String removeAllWhitespace(String input) {
-    return input.replaceAll(RegExp(r'\s+'), '');
-  }
 }

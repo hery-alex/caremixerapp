@@ -46,7 +46,7 @@ class PokemonApiViewModel extends Bloc<PokemonListEvent, PokemonListState> {
           );
         }
 
-        emit(state.copyWith(isLoading :false , pokemons:[...state.pokemons, ...newBatch]));
+        emit(state.copyWith(isLoadingMore :false , pokemons:[...state.pokemons, ...newBatch]));
     });
   }
   

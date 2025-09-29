@@ -17,6 +17,7 @@ class JsonRepository extends DataRepository{
       final  data = await json.decode(timelineList);
       final List<dynamic> jsonList = data['timelineItems'];
       List<TimelineItem> parsedData = jsonList.map((element)=> TimelineItem.fromJson(element)).toList();
+      parsedData.sort((a, b) => a.timelineItemTimestamp!.compareTo(b.timelineItemTimestamp!));
       return parsedData;
  }catch(e){
       throw Exception('Cannot get timelineItems $e'); 
