@@ -53,59 +53,76 @@ class _PokemonApiViewState extends State<PokemonApiView> {
               if (state.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (!state.isLoading) {
-                return CustomScrollView(
-                  controller: _scrollController,
-                 slivers: [
-                      SliverPadding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      sliver: SliverGrid(
-                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,      // 2 per row
-                        mainAxisSpacing: 8.0,   // vertical spacing
-                        crossAxisSpacing: 8.0,  // horizontal spacing
-                        childAspectRatio: 0.8,  // width/height ratio
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        childCount: state.pokemons.length,
-                        (context, index) {
-
-                          return Container(
-                            padding: EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.onSurface.withAlpha((255 * 0.20).round()),
-                              borderRadius: BorderRadius.all(Radius.circular(40))
-                            ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    UtilsFunctions.capitalizeFirstLetter(state.pokemons[index].pokemonName),
-                                    style:Theme.of(context).primaryTextTheme.headlineSmall,
+                return  RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<PokemonApiViewModel>().add(LoadPokemons());
+                  },
+                  child: CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                        SliverPadding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        sliver: SliverGrid(
+                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,      // 2 per row
+                          mainAxisSpacing: 15.0,   // vertical spacing
+                          crossAxisSpacing: 15.0,  // horizontal spacing
+                          childAspectRatio: 1.0,  // width/height ratio
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          childCount: state.pokemons.length,
+                          (context, index) {
+                  
+                            return Container(
+                              padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.surface,
+                                borderRadius: BorderRadius.all(Radius.circular(40)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:Theme.of(context).colorScheme.onPrimary
+                                        .withAlpha((255 * 0.24).round()),
+                                    blurRadius: 10,
                                   ),
-                                   Center(
-                                    child: CachedNetworkImage(
-                                      imageUrl: state.pokemons[index].pokemonImage,
-                                      height: 150,
-                                      width: 150,
-                                      fit: BoxFit.contain,
-                                      placeholder: (context, url) => const CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) => Icon(Icons.error, size: 50, color: Theme.of(context).colorScheme.error),
-                                    ),
+                                  BoxShadow(
+                                    color:Theme.of(context).colorScheme.onPrimary
+                                        .withAlpha((255 * 0.08).round()),
+                                    blurRadius: 5,
                                   ),
                                 ],
                               ),
-                          );
-                        
-                     })),),
-                      SliverToBoxAdapter(
-                      child: state.isLoadingMore && state.pokemons.isNotEmpty
-                          ? const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16),
-                              child: Center(child: CircularProgressIndicator()),
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                 ],
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      UtilsFunctions.capitalizeFirstLetter(state.pokemons[index].pokemonName),
+                                      style:Theme.of(context).primaryTextTheme.headlineSmall,
+                                    ),
+                                     Center(
+                                      child: CachedNetworkImage(
+                                        imageUrl: state.pokemons[index].pokemonImage,
+                                        height: 100,
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) => const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) => Icon(Icons.error, size: 50, color: Theme.of(context).colorScheme.error),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            );
+                          
+                       })),),
+                        SliverToBoxAdapter(
+                        child: state.isLoadingMore && state.pokemons.isNotEmpty
+                            ? const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Center(child: CircularProgressIndicator()),
+                              )
+                            : const SizedBox.shrink(),
+                      ),
+                   ],
+                  ),
                 );
               } else if (state.error != null) {
                 return Center(child: Text(state.error!));
