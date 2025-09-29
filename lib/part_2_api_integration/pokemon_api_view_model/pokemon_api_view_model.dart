@@ -32,6 +32,7 @@ class PokemonApiViewModel extends Bloc<PokemonListEvent, PokemonListState> {
       }
     });
     on<LoadNextPagePokemons>((event, emit) async {
+      emit(state.copyWith(isLoadingMore :true));
        final result = await pokemonListEndpoint.getAllPokemoList();
       final List<PokemonModel> newBatch = [];
         for (final element in result) {

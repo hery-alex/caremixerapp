@@ -5,11 +5,13 @@ import 'package:caremixer_test/part_2_api_integration/pokemon_model/pokemon_mode
 class PokemonListState {
   final List<PokemonModel> pokemons;
   final bool isLoading;
+  final bool isLoadingMore;
   final String? error;
 
   PokemonListState({
     this.pokemons = const [],
     this.isLoading = false,
+    this.isLoadingMore = false,
     this.error,
   });
 
@@ -17,10 +19,12 @@ class PokemonListState {
   PokemonListState copyWith({
     List<PokemonModel>? pokemons,
     bool? isLoading,
+    bool? isLoadingMore,
     String? error,
   }) {
     return PokemonListState(
       pokemons: pokemons ?? this.pokemons,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
     );

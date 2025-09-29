@@ -97,6 +97,14 @@ class _PokemonApiViewState extends State<PokemonApiView> {
                           );
                         
                      })),),
+                      SliverToBoxAdapter(
+                      child: state.isLoadingMore && state.pokemons.isNotEmpty
+                          ? const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              child: Center(child: CircularProgressIndicator()),
+                            )
+                          : const SizedBox.shrink(),
+                    ),
                  ],
                 );
               } else if (state.error != null) {
