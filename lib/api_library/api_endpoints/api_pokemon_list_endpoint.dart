@@ -7,6 +7,11 @@ class ApiPokemonListEndpoint extends CaremixerApiBase{
      Uri? pokemonListNext;
      bool end = false;
 
+    void resetPagination() {
+      pokemonListNext = null;
+      end = false;
+    }
+
     Future<List<dynamic>> getAllPokemoList () async{
       if(!end){
         final uri =  pokemonListNext ?? Uri.https(_baseUrl, '/api/v2/pokemon',  {

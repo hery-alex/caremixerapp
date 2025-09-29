@@ -55,7 +55,7 @@ class _PokemonApiViewState extends State<PokemonApiView> {
               } else if (!state.isLoading) {
                 return  RefreshIndicator(
                   onRefresh: () async {
-                    context.read<PokemonApiViewModel>().add(LoadPokemons());
+                    context.read<PokemonApiViewModel>().add(ResetPaginationPokemons());
                   },
                   child: CustomScrollView(
                     controller: _scrollController,

@@ -48,6 +48,31 @@ class PokemonApiViewModel extends Bloc<PokemonListEvent, PokemonListState> {
 
         emit(state.copyWith(isLoadingMore :false , pokemons:[...state.pokemons, ...newBatch]));
     });
+    on<ResetPaginationPokemons>((event, emit) async {
+      emit(state.copyWith(isLoadingMore :true));
+
+     try {
+        pokemonListEndpoint.resetPagination();
+      final result = await pokemonListEndpoint.getAllPokemoList();
+      final List<PokemonModel> pokemonList = [];
+
+        for (final element in result) {
+          final pokemonImage =
+              await pokemonListEndpoint.getPokemonImage(element["url"]);
+          pokemonList.add(
+            PokemonModel(
+              pokemonName: element["name"],
+              pokemonImage: pokemonImage,
+            ),
+          );
+        }
+      
+        emit(state.copyWith(isLoading:false,pokemons :pokemonList));
+      } catch (e) {
+        emit(state.copyWith(isLoading:false,error: e.toString()));
+      }
+
+    });
   }
   
 }

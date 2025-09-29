@@ -36,3 +36,5 @@ abstract class PokemonListEvent {}
 class LoadPokemons extends PokemonListEvent {}
 
 class LoadNextPagePokemons extends PokemonListEvent {}
+
+class ResetPaginationPokemons extends PokemonListEvent {}
