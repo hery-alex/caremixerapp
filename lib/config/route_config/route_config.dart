@@ -1,4 +1,6 @@
 import 'package:caremixer_test/part_1_timelinelist/timeline_view/timelinelist_view.dart';
+import 'package:caremixer_test/part_2_api_integration/pokemon_view.dart';
+import 'package:caremixer_test/part_3_chat/chat_view.dart';
 import 'package:flutter/material.dart';
 
 
@@ -12,10 +14,12 @@ class RoutesConfiguration implements RouteConfig{
    @override
      Widget checkPath(RouteSettings settings){
      switch(settings.name!){
-      case '/part1':
+      case '/timeline':
         return   TimelineView();
-      case '/part2':
-        return  TimelineView();   
+      case '/pokemon':
+        return  PokemonApiView();   
+      case '/chat':
+        return  ChatView(); 
       default : 
         return const SizedBox();    
     }

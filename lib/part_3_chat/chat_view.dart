@@ -1,14 +1,14 @@
 import 'package:caremixer_test/config/layout_config/layout_config.dart';
 import 'package:flutter/material.dart';
 
-class PokemonApiView extends StatelessWidget {
-  const PokemonApiView({super.key});
+class ChatView extends StatelessWidget {
+  const ChatView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return LayoutConfig(
-        appBarTitle: 'Pokemon Api',
-        currentIndex: 1,
-        child:SizedBox(height: 300,width: 400,));
+        appBarTitle: 'Chat',
+        currentIndex: 2,
+        child:SizedBox(height: 300,width: 400));
   }
 }

@@ -46,7 +46,18 @@ class LayoutConfig extends StatelessWidget {
           selectedItemColor: Theme.of(context).colorScheme.onPrimary,
           unselectedItemColor: Theme.of(context).colorScheme.onSurface,
           currentIndex: currentIndex,
-          onTap: null,
+          onTap: (index){
+            if(index != currentIndex){
+            switch(index){
+              case 0: 
+               Navigator.of(context).popAndPushNamed('/timeline');
+              case 1: 
+               Navigator.of(context).popAndPushNamed('/pokemon');
+              case 2: 
+               Navigator.of(context).popAndPushNamed('/chat');
+            }
+            }
+          },
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.timeline_rounded),

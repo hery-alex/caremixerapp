@@ -9,7 +9,7 @@ void main() async{
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-  runApp( CaremixerApp());
+  runApp(CaremixerApp());
 }
 
 class CaremixerApp extends StatelessWidget {
@@ -20,7 +20,7 @@ class CaremixerApp extends StatelessWidget {
     return MaterialApp(
       title: 'CaremixerApp',
       theme: CaremixerTheme.primaryThemeData,
-      initialRoute: '/part1',
+      initialRoute: '/timeline',
       onGenerateRoute: (settings) => RoutesConfiguration.onGenerateRoute(settings),
     );
   }
