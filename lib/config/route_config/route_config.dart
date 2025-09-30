@@ -5,7 +5,6 @@ import 'package:caremixer_test/part_2_api_integration/pokemon_api_view_model/pok
 import 'package:caremixer_test/part_3_chat/chat_provider/chat_provider.dart';
 import 'package:caremixer_test/part_3_chat/chat_view/chat_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
