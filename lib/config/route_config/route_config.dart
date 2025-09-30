@@ -37,9 +37,20 @@ class RoutesConfiguration implements RouteConfig{
     RouteSettings settings,
   ) {
     return PageRouteBuilder(
-       pageBuilder: (context,animation1, animation2){
-         return RoutesConfiguration().checkPath(settings);
-       },
+     settings: settings,
+     pageBuilder: (context, animation1, animation2) {
+      final page = RoutesConfiguration().checkPath(settings);
+
+      return PopScope(
+        canPop: true,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop) {
+            Navigator.of(context).pop(result ?? "Back pressed");
+          }
+        },
+        child: page,
+      );
+    },
        transitionsBuilder: (_,anim,__,child){
           return FadeTransition(
             opacity: anim,

@@ -50,11 +50,11 @@ class LayoutConfig extends StatelessWidget {
             if(index != currentIndex){
             switch(index){
               case 0: 
-               Navigator.of(context).popAndPushNamed('/timeline');
+               Navigator.of(context).pushNamed('/timeline');
               case 1: 
-               Navigator.of(context).popAndPushNamed('/pokemon');
+               Navigator.of(context).pushNamed('/pokemon');
               case 2: 
-               Navigator.of(context).popAndPushNamed('/chat');
+               Navigator.of(context).pushNamed('/chat');
             }
             }
           },
