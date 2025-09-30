@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:caremixer_test/config/layout_config/layout_config.dart';
 import 'package:caremixer_test/part_2_api_integration/pokemon_api_view_model/pokemon_api_state.dart';
@@ -97,8 +99,8 @@ class _PokemonApiViewState extends State<PokemonApiView> {
                               SliverPadding(
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                               sliver: SliverGrid(
-                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,      // 2 per row
+                               gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: Platform.isMacOS ? 4: 2,      // 2 per row
                                 mainAxisSpacing: 15.0,   // vertical spacing
                                 crossAxisSpacing: 15.0,  // horizontal spacing
                                 childAspectRatio: 1.0,  // width/height ratio
